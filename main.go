@@ -209,7 +209,7 @@ func (s *DB) SingularTable(enable bool) {
 func (s *DB) NewScope(value interface{}) *Scope {
 	dbClone := s.clone()
 	dbClone.Value = value
-	scope := &Scope{db: dbClone, Value: value, username: dbClone.username}
+	scope := &Scope{db: dbClone, Value: value, Username: dbClone.username}
 	if s.search != nil {
 		scope.Search = s.search.clone()
 	} else {

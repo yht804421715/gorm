@@ -24,7 +24,7 @@ type Scope struct {
 	skipLeft        bool
 	fields          *[]*Field
 	selectAttrs     *[]string
-	username        string
+	Username        string
 }
 
 // IndirectValue return scope's reflect value's indirect value
