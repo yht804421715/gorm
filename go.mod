@@ -1,4 +1,4 @@
-module github.com/jinzhu/gorm
+module github.com/yht804421715/gorm
 
 go 1.12
 
