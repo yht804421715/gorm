@@ -32,6 +32,9 @@ type DB struct {
 	dialect       Dialect
 	singularTable bool
 
+	// custom
+	username string
+
 	// function to be used to override the creating of a new timestamp
 	nowFuncOverride func() time.Time
 }
@@ -106,7 +109,13 @@ func (s *DB) New() *DB {
 	clone := s.clone()
 	clone.search = nil
 	clone.Value = nil
+	clone.username = ""
 	return clone
+}
+
+func (s * DB) SetUser(username string) *DB{
+	s.username = username
+	return
 }
 
 type closer interface {
@@ -200,7 +209,7 @@ func (s *DB) SingularTable(enable bool) {
 func (s *DB) NewScope(value interface{}) *Scope {
 	dbClone := s.clone()
 	dbClone.Value = value
-	scope := &Scope{db: dbClone, Value: value}
+	scope := &Scope{db: dbClone, Value: value, username:dbClone.username}
 	if s.search != nil {
 		scope.Search = s.search.clone()
 	} else {
@@ -820,6 +829,7 @@ func (s *DB) clone() *DB {
 		blockGlobalUpdate: s.blockGlobalUpdate,
 		dialect:           newDialect(s.dialect.GetName(), s.db),
 		nowFuncOverride:   s.nowFuncOverride,
+		username:          s.username
 	}
 
 	s.values.Range(func(k, v interface{}) bool {
