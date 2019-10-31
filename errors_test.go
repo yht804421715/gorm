@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/jinzhu/gorm"
+	"github.com/yht804421715/gorm"
 )
 
 func TestErrorsCanBeUsedOutsideGorm(t *testing.T) {

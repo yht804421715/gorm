@@ -54,10 +54,10 @@ const (
 //       db, err := gorm.Open("mysql", "user:password@/dbname?charset=utf8&parseTime=True&loc=Local")
 //     }
 // GORM has wrapped some drivers, for easier to remember driver's import path, so you could import the mysql driver with
-//    import _ "github.com/jinzhu/gorm/dialects/mysql"
-//    // import _ "github.com/jinzhu/gorm/dialects/postgres"
-//    // import _ "github.com/jinzhu/gorm/dialects/sqlite"
-//    // import _ "github.com/jinzhu/gorm/dialects/mssql"
+//    import _ "github.com/yht804421715/gorm/dialects/mysql"
+//    // import _ "github.com/yht804421715/gorm/dialects/postgres"
+//    // import _ "github.com/yht804421715/gorm/dialects/sqlite"
+//    // import _ "github.com/yht804421715/gorm/dialects/mssql"
 func Open(dialect string, args ...interface{}) (db *DB, err error) {
 	if len(args) == 0 {
 		err = errors.New("invalid database source")
@@ -113,7 +113,7 @@ func (s *DB) New() *DB {
 	return clone
 }
 
-func (s * DB) SetUser(username string) *DB{
+func (s *DB) SetUser(username string) {
 	s.username = username
 	return
 }
@@ -209,7 +209,7 @@ func (s *DB) SingularTable(enable bool) {
 func (s *DB) NewScope(value interface{}) *Scope {
 	dbClone := s.clone()
 	dbClone.Value = value
-	scope := &Scope{db: dbClone, Value: value, username:dbClone.username}
+	scope := &Scope{db: dbClone, Value: value, username: dbClone.username}
 	if s.search != nil {
 		scope.Search = s.search.clone()
 	} else {
@@ -829,7 +829,7 @@ func (s *DB) clone() *DB {
 		blockGlobalUpdate: s.blockGlobalUpdate,
 		dialect:           newDialect(s.dialect.GetName(), s.db),
 		nowFuncOverride:   s.nowFuncOverride,
-		username:          s.username
+		username:          s.username,
 	}
 
 	s.values.Range(func(k, v interface{}) bool {
