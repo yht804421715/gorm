@@ -29,6 +29,9 @@ type Scope struct {
 }
 
 func (scope *Scope) GetContextValue(key interface{}) interface{} {
+	if scope.ctx == nil {
+		return nil
+	}
 	return scope.ctx.Value(key)
 }
 
