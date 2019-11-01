@@ -2,6 +2,7 @@ package gorm
 
 import (
 	"bytes"
+	"context"
 	"database/sql"
 	"database/sql/driver"
 	"errors"
@@ -24,7 +25,11 @@ type Scope struct {
 	skipLeft        bool
 	fields          *[]*Field
 	selectAttrs     *[]string
-	Username        string
+	ctx             context.Context
+}
+
+func (scope *Scope) GetContextValue(key interface{}) interface{} {
+	return scope.ctx.Value(key)
 }
 
 // IndirectValue return scope's reflect value's indirect value
